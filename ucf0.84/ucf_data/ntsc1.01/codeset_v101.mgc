@@ -1,0 +1,17 @@
+# UCF Codeset for Melee v1.01
+
+# Gecko codeset header
+00d0c0de 00d0c0de
+
+# If Codes Not Written
+22000034 817f4000
+
+# Permanently disable saving/loading if card unplugged
+0401c638 38000004
+0401c63c 901f0008
+
+# Endif
+e2000001 00000000
+
+# Gecko codeset end
+f0000000 00000000

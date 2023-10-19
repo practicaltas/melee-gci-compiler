@@ -1,0 +1,110 @@
+# UCF 0.84 Codeset for Melee v1.02
+
+# Gecko codeset header
+00d0c0de 00d0c0de
+
+# If Codes Not Written
+22000034 817f4000
+
+# Permanently disable saving/loading if card unplugged (mandatory)
+0401c638 38000004
+0401c63c 901f0008
+
+# Prevent Game Data Re-initialization (mandatory)
+041a4234 60000000
+
+# Set ArenaHi to 817f4000 (extremely mandatory)
+04000034 817f4000
+
+# Apply Deflicker and Volume Settings on Title Screen (recommended)
+C21A2210 00000007
+806D8840 88631CC5
+3D808015 618CF588
+7D8903A6 4E800421
+BB21007C 806D8840
+88631CC4 3D808016
+618C02C0 7D8903A6
+4E800421 00000000
+
+# Tournament Melee loads VS instead (mandatory if you don't want to change the data table)
+0422d638 38000002
+
+# General [Achilles, Dan Salvato, Magus, UnclePunch, Zauron, Datel, donny2112]
+041BFA20 38600002 #External/Boot to CSS/Boot To CSS.asm
+0415EE98 38600001 #Unlock All Characters and Stages [Datel]
+0415EDDC 38600001
+04164B14 38600001
+041648F4 38600001
+0415EE4C 38600001
+0415EE14 38600001
+0415D968 38600001
+0415D9D8 38600001
+0417229C 38600000
+041737B0 38600000
+04164658 38600001
+041644E8 38600001
+0430490C 38600063
+043044F0 38600001
+#043D4A48 00340102 #Stock Mode [Magus]
+#043D4A4C 04000A00 #4 Stocks [Magus]
+#043D4A50 08010100 #8 Minutes [Magus]
+#043D4A60 FF000000 #No Items [Magus]
+#043D4A78 E70000B0 #Singles Stages [Magus]
+0415D94C 4E800020 #Disable Special Messages [Most]
+0415D984 4E800020 #Disable Trophy Messages [Achilles]
+0416B480 60000000 #C-Stick in Single Player [Zauron]
+041B0A14 38600002 #Exiting Debug Menu Returns to CSS [Achilles]
+042641B0 38000001 #Faster CSS Load [UnclePunch]
+04397878 4800020C #Print OSReport on Crash [UnclePunch]
+C21AF6F4 00000006 #External/Skip Memcard Prompt/Skip Memcard Prompt.asm
+2C1D000F 41820010
+2C1D000D 41820008
+48000014 3D80801B
+618C01AC 7D8903A6
+4E800420 2C1D0000
+60000000 00000000
+C225B8BC 00000002 #External/LRAStart From SSS Goes to CSS/LRAStart From SSS Goes to CSS.asm
+3C608047 60639D30
+88630000 00000000
+#043D4A70 00000000 #External/Rumble Off/Rumble Off.asm
+
+#Tournament Settings Post-Boot [Altimor]
+0445BF10 00340102 # Stock mode
+0445BF14 04000A00 # 4 stocks
+0445BF18 08010100 # 8 minutes
+0445C370 FF000000 # No items
+0445C380 00000000 # Rumble off
+0445C388 E70000B0 # Legal stages
+
+# Stealth tournament codes [Achilles, UnclePunch]
+C22FCCD8 0000000D #External/Hide Nametag When Invisible/Hide Nametag When Invisible.asm
+3C608046 6063B6A0
+886324D0 2C030001
+41820050 887F0000
+3D808003 618C4110
+7D8903A6 4E800421
+8083002C 80640004
+2C030010 40820010
+80640010 2C0300EC
+41820010 8864221E
+54630631 41820014
+3D80802F 618CCCC8
+7D8903A6 4E800420
+281E0000 00000000
+04261B1C 60000000 #External/Closing CSS Door Preserves Nametag/On Window Close/Skip Nametag ID Reset.asm
+04261B30 60000000 #External/Closing CSS Door Preserves Nametag/On Window Close/Skip isUsingNametag Bool Reset.asm
+042605FC 38C00003 #External/Unplugging Closes CSS Door/Unplugging Closes CSS Door.asm
+
+# Tournament safety codes [Fizzi]
+# Codes to ensure integrity of tournament matches
+C222F958 00000004 #External/FixedDamageRatio/SkipInputHandling.asm
+2C050003 40820014
+3D808022 618CFB68
+7D8903A6 4E800420
+28050005 00000000
+C2167F40 00000005 #External/PreventPauseSoftLocks/ForcePauseOn.asm
+881E0002 2C000001
+40820018 881E0004
+2C000004 4181000C
+881E000A 48000008
+38000001 00000000
