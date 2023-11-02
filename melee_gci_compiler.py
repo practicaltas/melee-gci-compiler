@@ -19,6 +19,7 @@ script_path    The path to the MGC script file you want to compile.
 --nopack       Do not pack the GCI, so you can inspect the outputted data.
 --silent       Suppress command line output, except for fatal errors.
 --debug        Output extra information while compiling and on errors.
+--pal          Switch to PAL memory addresses.
 
 You can omit script_path to pack or unpack a GCI without changing its content.
 """
@@ -26,7 +27,7 @@ You can omit script_path to pack or unpack a GCI without changing its content.
 
 def main(argv):
     try:
-        opts, args = getopt.getopt(argv[1:],'i:o:h',['help','nopack','silent','debug'])
+        opts, args = getopt.getopt(argv[1:],'i:o:h',['help','nopack','silent','debug','pal'])
     except getopt.GetoptError:
         return 2
     if len(args) > 1:
@@ -41,6 +42,7 @@ def main(argv):
     debug = False
     usage = False
     error = False
+    pal = False
     for opt, arg in opts:
         match opt:
             case '-h'|'--help': usage = True
@@ -49,6 +51,7 @@ def main(argv):
             case '--nopack': nopack = True
             case '--silent': silent = True
             case '--debug': debug = True
+            case '--pal': pal = True
             case _: error = True
     if usage:
         print(USAGE_TEXT)
@@ -59,7 +62,7 @@ def main(argv):
         logger.warning("No MGC script specified; no custom data will be compiled")
     try:
         gci_data = compiler.init(script_path, input_gci_path=input_gci,
-                                 nopack=nopack, silent=silent, debug=debug)
+                                 nopack=nopack, silent=silent, debug=debug, pal=pal)
     except CompileError as e:
         if debug:
             raise
