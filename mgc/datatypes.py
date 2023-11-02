@@ -4,7 +4,8 @@ from copy import copy
 from pathlib import Path
 from dataclasses import dataclass, field
 from .errors import CompileError
-from .gci_tools.mem2gci import *
+from .gci_tools.mem2gci import data2gci
+from .gci_tools.memlist import *
 from . import logger
 from . import context
 from .context import Context
@@ -38,7 +39,7 @@ class MGCLine(NamedTuple):
 class CompilerState:
     """Keeps track of the current state of the compiler."""
 
-    def __init__(self):
+    def __init__(self, pal=False):
         self.path: Path = Path()
         self.pointer: int = 0
         self.gci_pointer_mode: bool = False
@@ -50,6 +51,7 @@ class CompilerState:
         self.write_table: list[WriteEntry] = []
         self.patch_table: list[WriteEntry] = []
         self.block_order: list[int] = []
+        self.mem_list = MemList(pal)
 
     def copy(self) -> 'CompilerState':
         """Easily creates a shallow copy of this object."""
@@ -71,7 +73,7 @@ def WriteEntryList(data: bytes, state: CompilerState) -> list[WriteEntry]:
         if state.pointer < 0:
             raise CompileError("Data pointer must be a positive value")
         try:
-            entries = data2gci(state.pointer, data)
+            entries = data2gci(state, data)
         except ValueError as e:
             raise CompileError(e.args[0])
         for pointer, data in entries:

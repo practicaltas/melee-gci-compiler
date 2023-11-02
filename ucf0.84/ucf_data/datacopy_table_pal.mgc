@@ -1,0 +1,57 @@
+DATACOPY TABLE
+
+During the ACE exploit loader, the datacopy table is used to copy our custom
+data from the save data memory region to other places in memory. This is because
+Melee wants to write things to the save data region such as nametags and match
+data. So, the first thing we need to do after triggering ACE is to get all of
+our custom data out of there and into safe memory regions that Melee won't
+touch.
+
+Each version of Melee needs its own datacopy table because the save file is
+loaded into different memory regions in each version. PAL also does not share
+a buffer overflow payload with the NTSC versions and so needs a separate loader.
+
+Another reason to use a different datacopy table per Melee version is that you
+probably want to copy different data for each version. For example, a Gecko
+codeset usually needs to be version-specific.
+
+Format:
+80465000 <-- The current location of our data
+817f4000 <-- The location we want to move the data to
+00003700 <-- The length of the data to copy
+--------------------------------------------------------------------------------
+
+!begin
+
+# --------------------
+# PAL datacopy table
+# --------------------
+!loc 8045186c
+
+# Internal filename
+80452614
+803bb244
+00000018
+
+# Displayed filename
+8045262c
+803bb228
+0000000c
+
+# Gecko codehandler
+80451A6C
+80191c24
+00000ba8
+
+# Gecko codeset
+80455E08
+817f2f00
+00003700
+
+# Default tournament settings
+80452638
+8044cd18
+0000000c
+
+# End table
+00000000

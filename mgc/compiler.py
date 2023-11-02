@@ -8,12 +8,12 @@ from .gci_tools.meleegci import melee_gamedata
 from .datatypes import CompilerState
 
 
-def _init_new_gci() -> melee_gamedata:
+def _init_new_gci(pal=False) -> melee_gamedata:
     """Creates a new gamedata object from the init_gci MGC script."""
     init_gci_path = Path(__file__).parent/"init_gci"/"init_gci.mgc"
     silent = logger.silent_log
     logger.silent_log = True
-    state = src(str(init_gci_path), CompilerState())
+    state = src(str(init_gci_path), CompilerState(pal=pal))
     gci_data = bytearray(0x16040)
     for w in state.write_table:
         gci_data[w.address:w.address+len(w.data)] = w.data
@@ -37,7 +37,7 @@ def _load_gci(gci_path: str) -> melee_gamedata:
     return input_gci
 
 
-def init(root_mgc_path: str=None, input_gci_path: str=None, silent=False, debug=False, nopack=False) -> bytearray:
+def init(root_mgc_path: str=None, input_gci_path: str=None, silent=False, debug=False, nopack=False, pal=False) -> bytearray:
     """Begins compilation by taking a root MGC path and parameters, then
     returns the raw bytes of the final GCI."""
     logger.silent_log = silent
@@ -47,9 +47,9 @@ def init(root_mgc_path: str=None, input_gci_path: str=None, silent=False, debug=
         input_gci = _load_gci(input_gci_path)
     else:
         logger.info("Initializing new GCI")
-        input_gci = _init_new_gci()
+        input_gci = _init_new_gci(pal)
     if root_mgc_path:
-        state = src(root_mgc_path, CompilerState())
+        state = src(root_mgc_path, CompilerState(pal=pal))
         for w in state.write_table:
             input_gci.raw_bytes[w.address:w.address+len(w.data)] = w.data
         if state.block_order:

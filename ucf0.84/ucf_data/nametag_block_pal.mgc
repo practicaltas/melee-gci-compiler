@@ -1,0 +1,28 @@
+NAMETAG BLOCK PAL
+
+This file sets up the data for PAL Melee's ACE (Arbitrary Code Execution)
+save file exploit. It is required in order to run custom code from a save file.
+--------------------------------------------------------------------------------
+
+!begin
+
+# Make the first nametag so long that it overflows into the stack's return pointer
+!loc 8045d850  # PAL: 8044e658
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD DDDDDDDD DDDDDDDD DDDDDDDD
+DDDDDDDD 804dfc50 8044e738 DDDDDDDD
+
+# This forces execution to branch to 8044e738 instead of back to the nametag
+#
+#   PAL: 8044e738

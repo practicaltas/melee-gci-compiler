@@ -46,7 +46,7 @@ make Melee GCI Compiler.
 
 ## Requirements
 
-Melee GCI Compiler requires Python 3.6 or higher. It also uses pre-compiled GNU
+Melee GCI Compiler requires Python 3.10 or higher. It also uses pre-compiled GNU
 GCC binaries `powerpc-eabi-as`, `powerpc-eabi-ld`, and `powerpc-eabi-objcopy`.
 For convenience, x86 binaries for Windows, macOS, and Linux are already
 included and will be called with no user configuration needed. ARM binaries are
