@@ -1,0 +1,50 @@
+UCF v0.84 MGC SCRIPT
+
+Usage (requires Python 3.10 or higher):
+python melee_gci_compiler.py --pal -i mgc/init_gci/ssbm-PAL.gci -o ucf0.84/ucf0.84pal.gci ucf0.84/ucf0.84pal.mgc
+
+Welcome to this example MGC script. This script compiles a save file containing
+the UCF codeset. You can find more information on each of the script components
+by reading through the MGC files in the ucf_data folder.
+
+The save file has three main components:
+1. The ACE exploit that runs our custom code when entering "Name Entry" in Melee
+2. The custom data we want to load, such as the Gecko codehandler and codeset
+3. The datacopy table, which tells the ACE loader where to copy our custom data
+--------------------------------------------------------------------------------
+
+!begin
+
+!src "ucf_data/ace_exploit_pal.mgc"
+!src "ucf_data/datacopy_table_pal.mgc"
+
+# Load our custom data into the addresses expected by the datacopy table
+
+# Internal filename
+!loc 80452614
+!string "UCFSettings"
+# pad to 0x18 length
+00 00 00 00 00 00 00 00 00 00 00 00 00
+
+# Displayed filename
+!loc 8045262c
+!string "UCF Save"
+
+# Default Tournament Settings
+!loc 80452638
+00 34 01 02 04 00 0a 00 08 01 01 00
+
+# Gecko codehandler
+!loc 80451a6c
+!file "ucf_data/codehandler.bin"
+
+# PAL Gecko codeset
+!loc 80455E08
+!src "ucf_data/pal/gecko_codeset_start_general_codes.mgc"
+#!src "ucf_data/pal/neutral_start.mgc"
+#!src "ucf_data/pal/disable_wobbling.mgc"
+#!src "ucf_data/pal/frozen_stadium.mgc"
+#!src "ucf_data/pal/polling_drift_fix.mgc"
+#!src "ucf_data/pal/ucf0.84.mgc"
+#!src "ucf_data/pal/pal_to_ntsc.mgc"
+!src "ucf_data/pal/gecko_codeset_end.mgc"
