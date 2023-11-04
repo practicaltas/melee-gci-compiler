@@ -1,0 +1,36 @@
+!macro nametag_fill
+	!add 1a0
+	20 00 00 00
+!macroend
+
+!gci 0
+!file "header_pal.bin"
+
+!gci 3988
+41 00 00 00
++nametag_fill 4
+
+!gci 4058
++nametag_fill 19
+
+!gci 6058
++nametag_fill 19
+
+!gci 8058
++nametag_fill 19
+
+!gci a058
++nametag_fill 19
+
+!gci c058
++nametag_fill 19
+
+!gci e058
++nametag_fill 19
+
+!gci 10058
++nametag_fill 19
+
+!gci 15988
+41 00 00 00
++nametag_fill 4

@@ -8,7 +8,7 @@ from .gci_tools.meleegci import melee_gamedata
 from .datatypes import CompilerState
 
 
-def _init_new_gci(pal=False) -> melee_gamedata:
+def _init_new_gci(pal: bool = False) -> melee_gamedata:
     """Creates a new gamedata object from the init_gci MGC script."""
     init_gci_path = Path(__file__).parent/"init_gci"/"init_gci.mgc"
     silent = logger.silent_log
