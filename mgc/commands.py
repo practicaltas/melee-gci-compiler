@@ -58,9 +58,25 @@ def _check_collisions(old_entries: list[WriteEntry], new_entries: list[WriteEntr
     for curr in new_entries:
         for prev in old_entries:
             if curr.intersects(prev):
-                logger.warning(f"GCI location 0x{max(prev.address, curr.address):x} "
-                               f"was already written to by {prev.context.path.name} "
-                               f"(Line {prev.context.line_number+1}) and is being overwritten")
+                if prev.context.path.name != "init_pal.mgc":
+                    logger.warning(f"GCI location 0x{max(prev.address, curr.address):x} "
+                                   f"was already written to by {prev.context.path.name} "
+                                   f"(Line {prev.context.line_number+1}) and is being overwritten")
+                else:
+                    # Check for fatal PAL nametag collision
+                    # Any nonzero byte written by init_pal.mgc that is later overwritten by a zero byte will cause some
+                    # of your data to be deleted by PAL Melee's nametag validator. Throw an error if this occurs.
+                    # TODO: Determine whether it is possible to resolve collisions automatically
+                    for b in range(len(prev.data)):
+                        if prev.data[b] != 0:
+                            curr_b = prev.address - curr.address + b
+                            if curr.data[curr_b] == 0:
+                                logger.error(f"Nametag Validation Error: GCI location 0x{prev.address + b:x} "
+                                             f"was already written to by {prev.context.path.name} "
+                                             f"(Line {prev.context.line_number + 1}) and is being overwritten "
+                                             f"by the value 0x{curr.data[curr_b:curr_b+4].hex()}, which will result "
+                                             f"in PAL Melee's nametag validator deleting data. Rearrange your sources "
+                                             f"until this doesn't occur")
     return
 
 

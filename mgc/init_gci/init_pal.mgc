@@ -7,7 +7,7 @@
 !file "header_pal.bin"
 
 !gci 3988
-41 00 00 00
+20 00 00 00
 +nametag_fill 4
 
 !gci 4058
@@ -32,5 +32,5 @@
 +nametag_fill 19
 
 !gci 15988
-41 00 00 00
+20 00 00 00
 +nametag_fill 4
