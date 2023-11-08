@@ -45,28 +45,11 @@ BB21007C 806D8840
 041644E8 38600001
 0430490C 38600063
 043044F0 38600001
-#043D4A48 00340102 #Stock Mode [Magus]
-#043D4A4C 04000A00 #4 Stocks [Magus]
-#043D4A50 08010100 #8 Minutes [Magus]
-#043D4A60 FF000000 #No Items [Magus]
-#043D4A78 E70000B0 #Singles Stages [Magus]
 0415D94C 4E800020 #Disable Special Messages [Most]
 0415D984 4E800020 #Disable Trophy Messages [Achilles]
 0416B480 60000000 #C-Stick in Single Player [Zauron]
-041B0A14 38600002 #Exiting Debug Menu Returns to CSS [Achilles]
 042641B0 38000001 #Faster CSS Load [UnclePunch]
 04397878 4800020C #Print OSReport on Crash [UnclePunch]
-C21AF6F4 00000006 #External/Skip Memcard Prompt/Skip Memcard Prompt.asm
-2C1D000F 41820010
-2C1D000D 41820008
-48000014 3D80801B
-618C01AC 7D8903A6
-4E800420 2C1D0000
-60000000 00000000
-C225B8BC 00000002 #External/LRAStart From SSS Goes to CSS/LRAStart From SSS Goes to CSS.asm
-3C608047 60639D30
-88630000 00000000
-#043D4A70 00000000 #External/Rumble Off/Rumble Off.asm
 
 #Tournament Settings Post-Boot [Altimor]
 0445BF10 00340102 # Stock mode
@@ -77,20 +60,6 @@ C225B8BC 00000002 #External/LRAStart From SSS Goes to CSS/LRAStart From SSS Goes
 0445C388 E70000B0 # Legal stages
 
 # Stealth tournament codes [Achilles, UnclePunch]
-C22FCCD8 0000000D #External/Hide Nametag When Invisible/Hide Nametag When Invisible.asm
-3C608046 6063B6A0
-886324D0 2C030001
-41820050 887F0000
-3D808003 618C4110
-7D8903A6 4E800421
-8083002C 80640004
-2C030010 40820010
-80640010 2C0300EC
-41820010 8864221E
-54630631 41820014
-3D80802F 618CCCC8
-7D8903A6 4E800420
-281E0000 00000000
 04261B1C 60000000 #External/Closing CSS Door Preserves Nametag/On Window Close/Skip Nametag ID Reset.asm
 04261B30 60000000 #External/Closing CSS Door Preserves Nametag/On Window Close/Skip isUsingNametag Bool Reset.asm
 042605FC 38C00003 #External/Unplugging Closes CSS Door/Unplugging Closes CSS Door.asm

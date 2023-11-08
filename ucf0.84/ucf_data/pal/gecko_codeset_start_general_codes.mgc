@@ -1,7 +1,5 @@
 # UCF 0.84 Codeset for Melee vPAL
 
-# Mandatory Memcard Codes for Melee vPAL
-
 # Gecko codeset header
 00d0c0de 00d0c0de
 
@@ -18,44 +16,50 @@
 # Set ArenaHi to 817f2f00 (extremely mandatory)
 04000034 817f2f00
 
+# Apply Deflicker and Volume Settings on Title Screen (recommended)
+C21A2C04 00000007
+806D8858 88631CCD
+3D808015 618CFDDC
+7D8903A6 4E800421
+BB210084 806D8858
+88631CCC 3D808016
+618C0CF8 7D8903A6
+4E800421 00000000
+
 # Tournament Melee loads VS instead (mandatory if you don't want to change the data table)
 0422f4a4 38000002
 
-# General
+# General [Achilles, Dan Salvato, Magus, UnclePunch, Zauron, donny2112, moester_]
 041C1580 38600002 #External/Boot to CSS/Boot To CSS.asm
 0444CD28 FFFFFFFF #Unlock All Characters and Stages
 0444CD30 FFFFFFFF
-#Disable Special Messages [Most]
-#Disable Trophy Messages [Achilles]
+0415E0F0 4E800020 #Disable Special Messages [Most, moester_]
+0415E128 4E800020 #Disable Trophy Messages [Achilles, moester_]
 0416BE50 60000000 #C-Stick in Single Player [Zauron]
-#Exiting Debug Menu Returns to CSS [Achilles]
-#Faster CSS Load [UnclePunch]
-#Print OSReport on Crash [UnclePunch]
-#External/Skip Memcard Prompt/Skip Memcard Prompt.asm
-C225C3E8 00000002 #External/LRAStart From SSS Goes to CSS/LRAStart From SSS Goes to CSS.asm
-3C608046 6063AB38
-88630000 00000000
+04264914 38000001 #Faster CSS Load [UnclePunch, moester_]
+043977A0 4800020C #Print OSReport on Crash [UnclePunch, moester_]
 
 #Tournament Settings Post-Boot [Altimor]
+#Stock mode, 4 stock, 8 minutes are added elsewhere
 0444D178 FF000000 # No items
 0444D188 00000000 # Rumble off
 0444D190 E70000B0 # Legal stages
 
 # Stealth tournament codes [Achilles, UnclePunch]
-C22FD620 0000000D #External/Hide Nametag When Invisible/Hide Nametag When Invisible.asm
-3C608045 6063C4A8
-886324D0 2C030001
-41820050 887F0000
-3D808003 618C4704
-7D8903A6 4E800421
-8083002C 80640004
-2C030010 40820010
-80640010 2C0300EC
-41820010 8864221E
-54630673 41820014
-3D80802F 618CD610
-7D8903A6 4E800420
-281E0000 00000000
 042622C8 60000000 #External/Closing CSS Door Preserves Nametag/On Window Close/Skip Nametag ID Reset.asm
 042622DC 60000000 #External/Closing CSS Door Preserves Nametag/On Window Close/Skip isUsingNametag Bool Reset.asm
 04260D9C 38C00003 #External/Unplugging Closes CSS Door/Unplugging Closes CSS Door.asm
+
+# Tournament safety codes [Fizzi, moester_]
+# Codes to ensure integrity of tournament matches
+C2231854 00000004 #External/FixedDamageRatio/SkipInputHandling.asm
+2C050003 40820014
+3D808023 618C1A64
+7D8903A6 4E800420
+28050005 00000000
+C2167570 00000005 #External/PreventPauseSoftLocks/ForcePauseOn.asm
+881E0002 2C000001
+40820018 881E0004
+2C000004 4181000C
+881E000A 48000008
+38000001 00000000

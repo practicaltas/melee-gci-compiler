@@ -1,7 +1,7 @@
 UCF v0.84 MGC SCRIPT
 
 Usage (requires Python 3.10 or higher):
-python melee_gci_compiler.py -o ucf0.84/ucf0.84ntsc.gci ucf0.84/ucf0.84ntsc.mgc
+python melee_gci_compiler.py -o ucf0.84/ucf0.84ntscfrozenstadium.gci ucf0.84/ucf0.84ntscfrozenstadium.mgc
 
 Welcome to this example MGC script. This script compiles a save file containing
 the UCF codeset. You can find more information on each of the script components
