@@ -52,6 +52,7 @@ class CompilerState:
         self.patch_table: list[WriteEntry] = []
         self.block_order: list[int] = []
         self.mem_list = MemList(pal)
+        self.pal_nametag_validation_error = 0
 
     def copy(self) -> 'CompilerState':
         """Easily creates a shallow copy of this object."""

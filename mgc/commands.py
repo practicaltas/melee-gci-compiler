@@ -47,16 +47,16 @@ def write(data: bytes, state: CompilerState) -> CompilerState:
     if state.patch_mode:
         state.patch_table += entries
     else:
-        _check_collisions(state.write_table, entries)
+        _check_collisions(state, entries)
         state.write_table += entries
     state.pointer += sum([len(entry.data) for entry in entries])
     return state
 
 
-def _check_collisions(old_entries: list[WriteEntry], new_entries: list[WriteEntry]) -> None:
+def _check_collisions(state: CompilerState, new_entries: list[WriteEntry]) -> None:
     """Checks for and warns about collisions in the write table."""
     for curr in new_entries:
-        for prev in old_entries:
+        for prev in state.write_table:
             if curr.intersects(prev):
                 if prev.context.path.name != "init_pal.mgc":
                     logger.warning(f"GCI location 0x{max(prev.address, curr.address):x} "
@@ -77,6 +77,8 @@ def _check_collisions(old_entries: list[WriteEntry], new_entries: list[WriteEntr
                                              f"by the value 0x{curr.data[curr_b:curr_b+4].hex()}, which will result "
                                              f"in PAL Melee's nametag validator deleting data. Rearrange your sources "
                                              f"until this doesn't occur")
+                                state.pal_nametag_validation_error += 1
+
     return
 
 
@@ -142,6 +144,8 @@ def _compile_file(path: Path, state: CompilerState) -> CompilerState:
                 state = func(*line.args, state.copy())
         if state.current_macro:
             raise CompileError("Macro does not have an end")
+        if state.pal_nametag_validation_error > 0:
+            raise CompileError("PAL nametag validation failed, ")
     return state
 
 
