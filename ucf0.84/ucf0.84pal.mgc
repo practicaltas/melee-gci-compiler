@@ -21,32 +21,35 @@ The save file has three main components:
 !src "ucf_data/ace_exploit_pal.mgc"
 !src "ucf_data/datacopy_table_pal.mgc"
 
-# Load our custom data into the addresses expected by the datacopy table
+# Gecko codehandler
+!loc 80451a6c
+!file "ucf_data/codehandler_pal.bin"
 
+# PAL Melee includes nametag area validation, which requires certain byte in each
+# nametag field to be nonzero. Because of this, we encode all copydata such that
+# the PAL area validation succeeds. Loader 2 in ace_exploit decodes all transferred
+# data. Note that the decoder expects all datacopy_table entries to be word aligned.
+!palencode
+
+# Load our custom data into the addresses expected by the datacopy table
 # Internal filename
 !loc 80452614
-!string "UCFSettings"
+!string "UCFSettings PAL"
 # pad to 0x18 length
-00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00
 
 # Displayed filename
 !loc 8045262c
 !string "UCF Save"
+# pad to 0xC length
+00 00 00 00
 
 # Default Tournament Settings
 !loc 80452638
 00 34 01 02 04 00 0a 00 08 01 01 00
 
-# Gecko codehandler
-!loc 80451a6c
-!file "ucf_data/codehandler_pal.bin"
-
 # PAL Gecko codeset
-# If a nametag validation error is thrown here during the build process, the resulting gci would have been readable by
-# PAL Melee but would fail its nametag validation. Specifically, this means your codes are arranged precisely so that
-# a specific byte is 0x00, which happens to be the one byte per nametag that the validator expects to be nonzero.
-# If this happens, you will need to rearrange the order of these files so that particular byte is in a different spot.
-# Make sure gecko_codeset_start_general_codes.mgc remains at the start, and gecko_codeset_end.mgc remains at the end.
+
 !loc 80455E08
 !src "ucf_data/pal/gecko_codeset_start_general_codes.mgc"
 !src "ucf_data/pal/neutral_start.mgc"
@@ -55,3 +58,10 @@ The save file has three main components:
 !src "ucf_data/pal/ucf0.84.mgc"
 !src "ucf_data/pal/pal_to_ntsc.mgc"
 !src "ucf_data/pal/gecko_codeset_end.mgc"
+
+# Encoded section ends here. The used encoding constant is placed according to
+# address argument, so if address is changed, loader 2 needs to be altered
+# accordingly.
+!palencodeend 8044e950
+
+!end

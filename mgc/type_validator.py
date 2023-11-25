@@ -99,6 +99,8 @@ _COMMANDS: dict[str, list[Callable]] = {
     'c2end': [],
     'begin': [],
     'end': [],
+    'palencode': [],
+    'palencodeend': [_address],
     'echo': [_text],
     'macro': [_any],
     'macroend': [],

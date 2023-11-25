@@ -46,9 +46,16 @@ def write(data: bytes, state: CompilerState) -> CompilerState:
     entries = WriteEntryList(data, state)
     if state.patch_mode:
         state.patch_table += entries
+
+    elif state.pal_nametag_validation_encoding_mode:
+
+        _check_collisions(state, entries)
+        state.pal_nametag_encoded_write_table += entries
     else:
+
         _check_collisions(state, entries)
         state.write_table += entries
+
     state.pointer += sum([len(entry.data) for entry in entries])
     return state
 
@@ -66,18 +73,10 @@ def _check_collisions(state: CompilerState, new_entries: list[WriteEntry]) -> No
                     # Check for fatal PAL nametag collision
                     # Any nonzero byte written by init_pal.mgc that is later overwritten by a zero byte will cause some
                     # of your data to be deleted by PAL Melee's nametag validator. Throw an error if this occurs.
-                    # TODO: Determine whether it is possible to resolve collisions automatically
                     for b in range(len(prev.data)):
                         if prev.data[b] != 0:
                             curr_b = prev.address - curr.address + b
-                            if curr.data[curr_b] == 0:
-                                logger.error(f"Nametag Validation Error: GCI location 0x{prev.address + b:x} "
-                                             f"was already written to by {prev.context.path.name} "
-                                             f"(Line {prev.context.line_number + 1}) and is being overwritten "
-                                             f"by the value 0x{curr.data[curr_b:curr_b+4].hex()}, which will result "
-                                             f"in PAL Melee's nametag validator deleting data. Rearrange your sources "
-                                             f"until this doesn't occur")
-                                state.pal_nametag_validation_error += 1
+                            state.pal_nametag_validation_collusions.add(curr.data[curr_b])
 
     return
 
@@ -144,8 +143,7 @@ def _compile_file(path: Path, state: CompilerState) -> CompilerState:
                 state = func(*line.args, state.copy())
         if state.current_macro:
             raise CompileError("Macro does not have an end")
-        if state.pal_nametag_validation_error > 0:
-            raise CompileError("PAL nametag validation failed, ")
+
     return state
 
 
@@ -224,6 +222,38 @@ def c2end(_: CompilerState) -> CompilerState:
     raise CompileError(message)
 
 
+def palencode(state: CompilerState) -> CompilerState:
+    """Starts PAL encode data block."""
+    state.pal_nametag_validation_encoding_mode = True
+    return state
+
+
+def palencodeend(address: int, state: CompilerState) -> CompilerState:
+    """Ends PAL encode block, and encodes the entries written in the block."""
+
+    for i in range(1, 256):
+        if i not in state.pal_nametag_validation_collusions:
+            state.pal_nametag_validation_encoding_byte = i
+            break
+
+    state.pal_nametag_validation_encoding_mode = False
+
+    for entry in state.pal_nametag_encoded_write_table:
+
+        state.write_table.append(entry)
+        startbyte = (4-(entry.address%4))%4
+
+        for b in range(startbyte, len(entry.data), 4):
+
+            encodedbytes = bytes([(entry.data[b] - state.pal_nametag_validation_encoding_byte) & 255])
+            patch(entry.address + b, state)
+            write(encodedbytes, state)
+
+    loc(address, state)
+
+    write(bytes([state.pal_nametag_validation_encoding_byte]), state)
+    return state
+
 def begin(_: CompilerState) -> CompilerState:
     """Not runnable. Signifies the beginning of an MGC script."""
     message = "!begin is used more than once in this file"
@@ -266,6 +296,8 @@ _FUNCS: dict[str, Callable] = {
     'macroend': macroend,
     'callmacro': callmacro,
     'blockorder': blockorder,
-    'define': define
+    'define': define,
+    'palencode': palencode,
+    'palencodeend': palencodeend
     }
 

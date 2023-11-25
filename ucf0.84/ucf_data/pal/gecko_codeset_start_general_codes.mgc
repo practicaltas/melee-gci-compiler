@@ -26,9 +26,6 @@ BB210084 806D8858
 618C0CF8 7D8903A6
 4E800421 00000000
 
-# Tournament Melee loads VS instead (mandatory if you don't want to change the data table)
-0422f4a4 38000002
-
 # General [Achilles, Dan Salvato, Magus, UnclePunch, Zauron, donny2112, moester_]
 041C1580 38600002 #External/Boot to CSS/Boot To CSS.asm
 0444CD28 FFFFFFFF #Unlock All Characters and Stages
