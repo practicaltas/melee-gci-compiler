@@ -44,15 +44,18 @@ class CompilerState:
         self.pointer: int = 0
         self.gci_pointer_mode: bool = False
         self.patch_mode: bool = False
+        self.pal_nametag_validation_encoding_mode = False
         self.current_macro: str = ''
         self.mgc_files: dict[Path, list[MGCLine]] = {}
         self.bin_files: dict[Path, bytes] = {}
         self.macro_files: dict[str, list[MGCLine]] = {}
         self.write_table: list[WriteEntry] = []
+        self.pal_nametag_encoded_write_table: list[WriteEntry] = []
         self.patch_table: list[WriteEntry] = []
         self.block_order: list[int] = []
         self.mem_list = MemList(pal)
-        self.pal_nametag_validation_error = 0
+        self.pal_nametag_validation_collusions: set[int] = set()
+        self.pal_nametag_validation_encoding_byte: int = 0
 
     def copy(self) -> 'CompilerState':
         """Easily creates a shallow copy of this object."""

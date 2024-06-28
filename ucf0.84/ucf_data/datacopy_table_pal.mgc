@@ -33,15 +33,10 @@ Format:
 803bb244
 00000018
 
-# Displayed filename
+# Displayed filename English
 8045262c
-803bb228
+803bb17C
 0000000c
-
-# Gecko codehandler
-80451A6C
-80191c24
-00000ba8
 
 # Gecko codeset
 80455E08
