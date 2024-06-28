@@ -43,7 +43,6 @@ The save file has three main components:
 !src "ucf_data/ntsc1.02/gecko_codeset_start_general_codes.mgc"
 !src "ucf_data/ntsc1.02/neutral_start.mgc"
 !src "ucf_data/ntsc1.02/disable_wobbling.mgc"
-!src "ucf_data/ntsc1.02/frozen_stadium.mgc"
 !src "ucf_data/ntsc1.02/polling_drift_fix.mgc"
 !src "ucf_data/ntsc1.02/ucf0.84.mgc"
 !src "ucf_data/ntsc1.02/gecko_codeset_end.mgc"
